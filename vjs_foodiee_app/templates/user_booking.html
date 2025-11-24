@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>VJS Foodiee  - Table Booking</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class="container">
+    <h1>VJS Foodiee 🍽️</h1>
+    <h2>Book Your Table</h2>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div class="flash-container">
+          {% for category, message in messages %}
+            <div class="flash {{ category }}">{{ message }}</div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+
+    <form method="POST" class="card">
+      <label>Full Name</label>
+      <input type="text" name="name" required>
+
+      <label>Phone Number</label>
+      <input type="text" name="phone" required>
+
+      <label>Date</label>
+      <input type="date" name="date" required>
+
+      <label>Time</label>
+      <input type="time" name="time" required>
+
+      <label>No. of Persons</label>
+      <input type="number" name="persons" min="1" max="20" required>
+
+      <label>Select Table (10 Slots)</label>
+      <select name="table_no" required>
+        {% for t in tables %}
+          <option value="{{ t }}">Table {{ t }}</option>
+        {% endfor %}
+      </select>
+
+      <button type="submit">Book Now</button>
+    </form>
+
+    <p class="note">We have 10 tables. Each booking reserves one table for your selected date & time.</p>
+
+    <a href="{{ url_for('admin_login') }}" class="admin-link">Admin Login</a>
+  </div>
+</body>
+</html>
